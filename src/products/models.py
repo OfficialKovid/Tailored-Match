@@ -62,6 +62,35 @@ class Shirt(models.Model):
                 
         return best_match_score
 
+    def get_best_matching_size(self, user_measurements):
+        if not user_measurements:
+            return None
+            
+        best_size = None
+        best_score = -1
+        user_chest = float(user_measurements.get('chest', 0))
+        user_shoulder = float(user_measurements.get('shoulder', 0))
+        
+        for size in self.sizes.all():
+            if hasattr(size, 'measurements'):
+                measurements = size.measurements
+                if not measurements:
+                    continue
+                    
+                chest_diff = abs(float(measurements.chest or 0) - user_chest)
+                shoulder_diff = abs(float(measurements.shoulder or 0) - user_shoulder)
+                
+                match_score = 100 - (chest_diff + shoulder_diff) * 2
+                if match_score > best_score:
+                    best_score = match_score
+                    best_size = size.size_name
+                
+        return best_size
+
+    def get_sizes_with_measurements(self):
+        """Return a set of size names that have measurement data"""
+        return {size.size_name for size in self.sizes.filter(measurements__isnull=False)}
+
     class Meta:
         db_table = 'shirts'
         verbose_name = 'Shirt'

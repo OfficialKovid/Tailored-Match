@@ -18,15 +18,18 @@ class ShirtListView(ListView):
             queryset = queryset.filter(Q(title__icontains=fit_type))
         
         # Calculate match scores and sort
-        shirts_with_scores = []
+        shirts_with_data = []
         for shirt in queryset:
             match_score = shirt.get_size_match_score(user_measurements)
-            shirts_with_scores.append((shirt, match_score))
+            best_size = shirt.get_best_matching_size(user_measurements)
+            sizes_with_measurements = shirt.get_sizes_with_measurements()
+            shirts_with_data.append((shirt, match_score, best_size, sizes_with_measurements))
         
         # Sort by match score, highest first
-        shirts_with_scores.sort(key=lambda x: x[1], reverse=True)
+        shirts_with_data.sort(key=lambda x: x[1], reverse=True)
         
-        return [shirt for shirt, score in shirts_with_scores]
+        return [(shirt, best_size, sizes_with_measurements) 
+                for shirt, score, best_size, sizes_with_measurements in shirts_with_data]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

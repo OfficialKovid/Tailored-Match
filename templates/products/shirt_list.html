@@ -24,7 +24,7 @@
 
         <!-- Products Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {% for shirt, best_size, sizes_with_measurements in shirts %}
+            {% for shirt in shirts %}
             <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                 <div class="relative h-80">
                     <img src="{{ shirt.img_url }}" 
@@ -47,17 +47,22 @@
                     <div class="mb-4">
                         <p class="text-sm text-gray-600 mb-2">Available Sizes:</p>
                         <div class="flex flex-wrap gap-2">
-                            {% for size in shirt.size_list %}
-                            <span class="px-2 py-1 text-xs font-medium rounded 
-                                {% if size == best_size %}
-                                    bg-green-500 text-white
-                                {% elif size not in sizes_with_measurements %}
-                                    bg-yellow-100 text-gray-700
-                                {% else %}
-                                    bg-gray-100
-                                {% endif %}">
-                                {{ size }}
-                            </span>
+                            {% for size in shirt.sizes.all %}
+                                {% with measurements=size.measurements %}
+                                <span class="px-2 py-1 text-xs font-medium rounded 
+                                    {% if not measurements or not measurements.chest or not measurements.shoulder or not measurements.length or not measurements.sleeve_length %}
+                                        bg-red-100 text-red-700
+                                    {% elif size.size_name == shirt.best_size %}
+                                        bg-green-100 text-green-700
+                                    {% else %}
+                                        bg-gray-100 text-gray-700
+                                    {% endif %}">
+                                    {{ size.size_name }}
+                                    {% if size.size_name == shirt.best_size %}
+                                        <span class="ml-1">✓</span>
+                                    {% endif %}
+                                </span>
+                                {% endwith %}
                             {% endfor %}
                         </div>
                     </div>

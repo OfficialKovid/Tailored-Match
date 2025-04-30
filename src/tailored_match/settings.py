@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'measurements.apps.MeasurementsConfig',
     'products.apps.ProductsConfig',
     'home.apps.HomeConfig',
+    'search.apps.SearchConfig',
 
 ]
 

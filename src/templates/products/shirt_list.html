@@ -4,21 +4,88 @@
 {% block content %}
 <div class="min-h-screen bg-gray-50 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Header and Filters -->
+        <!-- Header with Filter Toggle -->
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-6">Available Shirts</h1>
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-gray-900">Available Shirts</h1>
+                <button onclick="toggleFilters()" 
+                        class="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
+                    <span>Filters</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
             
-            <div class="flex flex-wrap gap-2">
-                <a href="{% url 'products:shirt_list' %}" 
-                   class="px-4 py-2 rounded-lg {% if current_fit == 'all' %}bg-blue-600 text-white{% else %}bg-white text-gray-700 hover:bg-gray-100{% endif %} border border-gray-300 transition-colors">
-                    All Fits
-                </a>
-                {% for fit in fit_types %}
-                <a href="{% url 'products:shirt_list' %}?fit={{ fit }}" 
-                   class="px-4 py-2 rounded-lg {% if current_fit == fit %}bg-blue-600 text-white{% else %}bg-white text-gray-700 hover:bg-gray-100{% endif %} border border-gray-300 transition-colors">
-                    {{ fit }}
-                </a>
-                {% endfor %}
+            <!-- Filter Panel (Hidden by Default) -->
+            <div id="filterPanel" class="hidden">
+                <div class="bg-white p-4 rounded-lg shadow mb-6">
+                    <!-- Fit Types -->
+                    <div class="mb-4">
+                        <h3 class="text-sm font-medium text-gray-700 mb-3">Fit Types</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="{% url 'products:shirt_list' %}" 
+                               class="px-4 py-2 rounded-lg {% if current_fit == 'all' %}bg-blue-600 text-white{% else %}bg-white text-gray-700 hover:bg-gray-100{% endif %} border border-gray-300 transition-colors">
+                                All Fits
+                            </a>
+                            {% for fit in fit_types %}
+                            <a href="{% url 'products:shirt_list' %}?fit={{ fit }}" 
+                               class="px-4 py-2 rounded-lg {% if current_fit == fit %}bg-blue-600 text-white{% else %}bg-white text-gray-700 hover:bg-gray-100{% endif %} border border-gray-300 transition-colors">
+                                {{ fit }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filters Form -->
+                    <form method="get" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Price Range -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">Price Range</label>
+                            <div class="flex gap-2">
+                                <input type="number" name="min_price" value="{{ min_price }}" 
+                                       placeholder="Min" class="w-full rounded-md border-gray-300 shadow-sm">
+                                <input type="number" name="max_price" value="{{ max_price }}" 
+                                       placeholder="Max" class="w-full rounded-md border-gray-300 shadow-sm">
+                            </div>
+                        </div>
+
+                        <!-- Rating Filter -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">Minimum Rating</label>
+                            <select name="min_rating" class="w-full rounded-md border-gray-300 shadow-sm">
+                                <option value="">Any Rating</option>
+                                <option value="4" {% if min_rating == '4' %}selected{% endif %}>4+ ★</option>
+                                <option value="3" {% if min_rating == '3' %}selected{% endif %}>3+ ★</option>
+                                <option value="2" {% if min_rating == '2' %}selected{% endif %}>2+ ★</option>
+                            </select>
+                        </div>
+
+                        <!-- Sort By -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">Sort By</label>
+                            <select name="sort" class="w-full rounded-md border-gray-300 shadow-sm">
+                                <option value="match" {% if sort_by == 'match' %}selected{% endif %}>Best Match</option>
+                                <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                                <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                                <option value="rating" {% if sort_by == 'rating' %}selected{% endif %}>Rating</option>
+                            </select>
+                        </div>
+
+                        <!-- Hidden field to maintain current fit filter -->
+                        {% if current_fit != 'all' %}
+                        <input type="hidden" name="fit" value="{{ current_fit }}">
+                        {% endif %}
+
+                        <!-- Apply Filters Button -->
+                        <div class="flex items-end">
+                            <button type="submit" 
+                                    class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                Apply Filters
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -104,4 +171,15 @@
         {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleFilters() {
+    const filterPanel = document.getElementById('filterPanel');
+    filterPanel.classList.toggle('hidden');
+}
+
+// ...existing price slider code if any...
+</script>
 {% endblock %}

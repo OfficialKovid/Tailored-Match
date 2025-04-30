@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-6">Enter Your Measurements</h2>
+        <p class="mb-4 text-gray-600">Please enter your measurements in inches (up to 2 decimal places)</p>
+        
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+            <div class="p-4 {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %} rounded">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            
+            <div class="measurement-input">
+                <label for="chest" class="block text-sm font-medium text-gray-700">
+                    Chest Size (inches)
+                    <span class="text-xs text-gray-500 ml-1">Measure around the fullest part of your chest</span>
+                </label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <input type="number" 
+                           name="chest" 
+                           id="chest" 
+                           step="0.01" 
+                           required
+                           value="{{ current_measurements.chest|default:'' }}"
+                           class="focus:ring-blue-500 focus:border-blue-500 block w-full pr-12 sm:text-sm border-gray-300 rounded-md"
+                           placeholder="0.00">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <span class="text-gray-500 sm:text-sm">in</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="measurement-input">
+                <label for="shoulder" class="block text-sm font-medium text-gray-700">
+                    Shoulder Width (inches)
+                    <span class="text-xs text-gray-500 ml-1">Measure from shoulder point to shoulder point</span>
+                </label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <input type="number" 
+                           name="shoulder" 
+                           id="shoulder" 
+                           step="0.01" 
+                           required
+                           value="{{ current_measurements.shoulder|default:'' }}"
+                           class="focus:ring-blue-500 focus:border-blue-500 block w-full pr-12 sm:text-sm border-gray-300 rounded-md"
+                           placeholder="0.00">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <span class="text-gray-500 sm:text-sm">in</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="measurement-input">
+                <label for="length" class="block text-sm font-medium text-gray-700">
+                    Length (inches)
+                    <span class="text-xs text-gray-500 ml-1">Measure from shoulder to desired shirt length</span>
+                </label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <input type="number" 
+                           name="length" 
+                           id="length" 
+                           step="0.01" 
+                           required
+                           value="{{ current_measurements.length|default:'' }}"
+                           class="focus:ring-blue-500 focus:border-blue-500 block w-full pr-12 sm:text-sm border-gray-300 rounded-md"
+                           placeholder="0.00">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <span class="text-gray-500 sm:text-sm">in</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="measurement-input">
+                <label for="sleeve_length" class="block text-sm font-medium text-gray-700">
+                    Sleeve Length (inches)
+                    <span class="text-xs text-gray-500 ml-1">Measure from shoulder to wrist</span>
+                </label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <input type="number" 
+                           name="sleeve_length" 
+                           id="sleeve_length" 
+                           step="0.01" 
+                           required
+                           value="{{ current_measurements.sleeve_length|default:'' }}"
+                           class="focus:ring-blue-500 focus:border-blue-500 block w-full pr-12 sm:text-sm border-gray-300 rounded-md"
+                           placeholder="0.00">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <span class="text-gray-500 sm:text-sm">in</span>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Save Measurements
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Round to 2 decimal places on input
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('change', function() {
+            let value = parseFloat(this.value);
+            if (!isNaN(value)) {
+                this.value = Math.abs(value).toFixed(2);
+            }
+        });
+    });
+</script>
+{% endblock %}

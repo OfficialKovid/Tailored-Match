@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header and Filters -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Available Shirts</h1>
+            
+            <div class="flex flex-wrap gap-2">
+                <a href="{% url 'products:shirt_list' %}" 
+                   class="px-4 py-2 rounded-lg {% if current_fit == 'all' %}bg-blue-600 text-white{% else %}bg-white text-gray-700 hover:bg-gray-100{% endif %} border border-gray-300 transition-colors">
+                    All Fits
+                </a>
+                {% for fit in fit_types %}
+                <a href="{% url 'products:shirt_list' %}?fit={{ fit }}" 
+                   class="px-4 py-2 rounded-lg {% if current_fit == fit %}bg-blue-600 text-white{% else %}bg-white text-gray-700 hover:bg-gray-100{% endif %} border border-gray-300 transition-colors">
+                    {{ fit }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {% for shirt in shirts %}
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="relative h-80">
+                    <img src="{{ shirt.img_url }}" 
+                         alt="{{ shirt.title }}" 
+                         class="w-full h-full object-cover">
+                    {% if shirt.rating %}
+                    <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center">
+                        <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <span class="ml-1 text-sm font-medium">{{ shirt.rating }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">{{ shirt.title }}</h3>
+                    <p class="text-blue-600 font-bold mb-3">{{ shirt.price }}</p>
+                    
+                    <div class="mb-4">
+                        <p class="text-sm text-gray-600 mb-2">Available Sizes:</p>
+                        <div class="flex flex-wrap gap-2">
+                            {% for size in shirt.size_list %}
+                            <span class="px-2 py-1 text-xs font-medium bg-gray-100 rounded">{{ size }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <a href="{{ shirt.url }}" 
+                           target="_blank"
+                           class="w-full bg-white text-blue-600 border border-blue-600 px-4 py-2 rounded-lg text-center hover:bg-blue-50 transition-colors">
+                            View on Flipkart
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-12">
+                <p class="text-gray-500 text-lg">No shirts available.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

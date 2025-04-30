@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    {% if not user_measurements %}
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6">
+        <p>For personalized size recommendations, please <a href="{% url 'measurements:enter_measurements' %}" class="underline">add your measurements</a> first.</p>
+    </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {% for item in shirt_fits %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="{{ item.shirt.img_url }}" alt="{{ item.shirt.title }}" class="w-full h-64 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold mb-2">{{ item.shirt.title }}</h3>
+                <p class="text-gray-600 mb-2">{{ item.shirt.price }}</p>
+                
+                {% if user_measurements %}
+                    {% if item.best_size %}
+                    <div class="mb-2">
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">
+                            Best Fit: {{ item.best_size }}
+                        </span>
+                    </div>
+                    {% endif %}
+                {% endif %}
+
+                <div class="flex justify-between items-center mt-4">
+                    <div class="text-sm text-gray-500">
+                        Available Sizes: {{ item.shirt.sizes_listed }}
+                    </div>
+                    {% if item.shirt.rating %}
+                    <div class="flex items-center">
+                        <span class="text-yellow-400">★</span>
+                        <span class="ml-1">{{ item.shirt.rating }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <a href="{{ item.shirt.url }}" target="_blank" 
+                   class="mt-4 block text-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+                    View Details
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

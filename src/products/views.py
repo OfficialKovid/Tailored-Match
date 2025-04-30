@@ -1,4 +1,5 @@
 from django.views.generic import ListView
+from django.core.paginator import Paginator
 from .models import Shirt
 from django.db.models import Q
 
@@ -6,6 +7,7 @@ class ShirtListView(ListView):
     model = Shirt
     template_name = 'products/shirt_list.html'
     context_object_name = 'shirts'
+    paginate_by = 40
 
     def get_queryset(self):
         queryset = Shirt.objects.all()
@@ -17,7 +19,7 @@ class ShirtListView(ListView):
         if fit_type != 'all':
             queryset = queryset.filter(Q(title__icontains=fit_type))
         
-        # Calculate match scores and sort
+        # Calculate match scores and sort for all products
         shirts_with_data = []
         for shirt in queryset:
             match_score = shirt.get_size_match_score(user_measurements)
@@ -25,9 +27,10 @@ class ShirtListView(ListView):
             sizes_with_measurements = shirt.get_sizes_with_measurements()
             shirts_with_data.append((shirt, match_score, best_size, sizes_with_measurements))
         
-        # Sort by match score, highest first
+        # Sort all results by match score
         shirts_with_data.sort(key=lambda x: x[1], reverse=True)
         
+        # Return only the tuples needed for display
         return [(shirt, best_size, sizes_with_measurements) 
                 for shirt, score, best_size, sizes_with_measurements in shirts_with_data]
 

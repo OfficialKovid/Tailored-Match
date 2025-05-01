@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-6">Preference Search</h2>
+            
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Search Input -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Search Term</label>
+                    {{ form.search_term }}
+                    {% if form.search_term.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.search_term.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Measurement Priorities -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Set Your Priorities</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Chest (Always Priority 1) -->
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <label class="block font-medium text-gray-700">Chest</label>
+                            <input type="number" value="1" readonly
+                                   class="mt-1 bg-gray-100 border-gray-300 rounded-md w-full">
+                            <p class="text-sm text-gray-500 mt-1">Primary Priority</p>
+                        </div>
+                        
+                        <!-- Other Measurements -->
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <label class="block font-medium text-gray-700">Shoulder</label>
+                            {{ form.shoulder_priority }}
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <label class="block font-medium text-gray-700">Length</label>
+                            {{ form.length_priority }}
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <label class="block font-medium text-gray-700">Sleeve Length</label>
+                            {{ form.sleeve_priority }}
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" 
+                        class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                    Search with Preferences
+                </button>
+            </form>
+        </div>
+
+        {% if results %}
+        <!-- Search Results -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {% for shirt, best_size, score in results %}
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="relative h-80">
+                    <img src="{{ shirt.img_url }}" 
+                         alt="{{ shirt.title }}" 
+                         class="w-full h-full object-cover">
+                    {% if shirt.rating %}
+                    <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center">
+                        <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <span class="ml-1 text-sm font-medium">{{ shirt.rating }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">{{ shirt.title }}</h3>
+                    <p class="text-blue-600 font-bold mb-3">{{ shirt.price }}</p>
+                    
+                    <div class="mb-4">
+                        <p class="text-sm text-gray-600 mb-2">Available Sizes:</p>
+                        <div class="flex flex-wrap gap-2">
+                            {% for size in shirt.size_list %}
+                            <span class="px-2 py-1 text-xs font-medium rounded 
+                                {% if size == best_size %}
+                                    bg-green-500 text-white
+                                {% elif size not in sizes_with_measurements %}
+                                    bg-yellow-100 text-gray-700
+                                {% else %}
+                                    bg-gray-100
+                                {% endif %}">
+                                {{ size }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <a href="{{ shirt.url }}" 
+                           target="_blank"
+                           class="w-full bg-white text-blue-600 border border-blue-600 px-4 py-2 rounded-lg text-center hover:bg-blue-50 transition-colors">
+                            View on Flipkart
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

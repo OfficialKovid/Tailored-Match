@@ -38,7 +38,38 @@
                     </div>
 
                     <!-- Advanced Filters Form -->
-                    <form method="get" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <form method="get" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Measurement Priorities -->
+                        <div class="col-span-full mb-4">
+                            <h3 class="text-sm font-medium text-gray-700 mb-3">Drag to Set Priority</h3>
+                            <div id="priority-container" class="space-y-2">
+                                <!-- Chest is always first -->
+                                <div class="bg-blue-50 p-4 rounded-lg flex items-center">
+                                    <span class="font-medium text-gray-700">1. Chest</span>
+                                    <input type="hidden" name="chest_priority" value="1">
+                                </div>
+                                
+                                <!-- Draggable priorities -->
+                                <div class="bg-gray-50 p-4 rounded-lg flex items-center gap-2 cursor-move" draggable="true" data-measurement="shoulder">
+                                    <span class="priority-number">2</span>
+                                    <span class="font-medium text-gray-700">Shoulder</span>
+                                    <input type="hidden" name="shoulder_priority" value="2">
+                                </div>
+                                
+                                <div class="bg-gray-50 p-4 rounded-lg flex items-center gap-2 cursor-move" draggable="true" data-measurement="length">
+                                    <span class="priority-number">3</span>
+                                    <span class="font-medium text-gray-700">Length</span>
+                                    <input type="hidden" name="length_priority" value="3">
+                                </div>
+                                
+                                <div class="bg-gray-50 p-4 rounded-lg flex items-center gap-2 cursor-move" draggable="true" data-measurement="sleeve">
+                                    <span class="priority-number">4</span>
+                                    <span class="font-medium text-gray-700">Sleeve Length</span>
+                                    <input type="hidden" name="sleeve_priority" value="4">
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Price Range -->
                         <div class="space-y-2">
                             <label class="block text-sm font-medium text-gray-700">Price Range</label>
@@ -180,6 +211,57 @@ function toggleFilters() {
     filterPanel.classList.toggle('hidden');
 }
 
-// ...existing price slider code if any...
+// Priority drag and drop functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('priority-container');
+    const draggables = document.querySelectorAll('[draggable="true"]');
+    
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', () => {
+            draggable.classList.add('bg-gray-200');
+        });
+        
+        draggable.addEventListener('dragend', () => {
+            draggable.classList.remove('bg-gray-200');
+            updatePriorities();
+        });
+        
+        draggable.addEventListener('dragover', e => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(container, e.clientY);
+            const currentElement = draggable;
+            if (afterElement == null) {
+                container.appendChild(draggable);
+            } else {
+                container.insertBefore(draggable, afterElement);
+            }
+        });
+    });
+    
+    function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('[draggable="true"]')];
+        
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+    
+    function updatePriorities() {
+        const items = container.querySelectorAll('[draggable="true"]');
+        items.forEach((item, index) => {
+            const priorityNumber = item.querySelector('.priority-number');
+            const input = item.querySelector('input[type="hidden"]');
+            const priority = index + 2; // Start from 2 since chest is always 1
+            priorityNumber.textContent = priority;
+            input.value = priority;
+        });
+    }
+});
 </script>
 {% endblock %}

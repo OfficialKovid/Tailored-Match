@@ -5,4 +5,5 @@ app_name = 'measurements'
 
 urlpatterns = [
     path('', views.enter_measurements, name='enter_measurements'),
+    
 ]

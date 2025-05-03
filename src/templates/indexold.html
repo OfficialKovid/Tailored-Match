@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -85,7 +86,7 @@
     </div>
 </section>
 <div class="text-center mt-4">
-    <a href="{% url 'shirt_list' %}" class="btn btn-primary btn-lg">Browse Shirts</a>
+    <a href="{% url 'products:shirt_list' %}" class="btn btn-primary btn-lg">Browse Shirts</a>
 </div>
 {% endblock %}
 

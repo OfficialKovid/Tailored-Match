@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shirt Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f1f3f6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background-color: #2874f0;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-stats {
+            font-size: 14px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            background: #f8f8f8;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #212121;
+            margin-bottom: 10px;
+            height: 40px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .product-info {
+            flex-grow: 1;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #212121;
+            margin-bottom: 10px;
+        }
+
+        .rating {
+            display: inline-block;
+            background: #388e3c;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .sizes {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .size-tag {
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .size-tag:hover {
+            background: #2874f0;
+            color: white;
+        }
+
+        .size-details {
+            background: #f8f8f8;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .size-details.active {
+            display: block;
+        }
+
+        .size-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .size-details td {
+            padding: 4px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-id {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .view-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #2874f0;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.2s;
+            font-weight: 500;
+        }
+
+        .view-btn:hover {
+            background: #1a5abc;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            align-items: center;
+        }
+
+        .pagination button {
+            padding: 8px 16px;
+            background: #2874f0;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .pagination button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: #1a5abc;
+        }
+
+        .page-info {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Shirt Collection</h1>
+            <div class="header-stats">
+                Total Products: <span id="product-count">0</span>
+            </div>
+        </div>
+        <div class="products-grid"></div>
+        <div class="pagination">
+            <button id="prevPage" onclick="changePage(-1)" disabled>Previous</button>
+            <span class="page-info">Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
+            <button id="nextPage" onclick="changePage(1)">Next</button>
+        </div>
+
+        <script>
+            const productsPerPage = 40;
+            let currentPage = 1;
+            let allProducts = [];
+
+            function displayProducts(page) {
+                const start = (page - 1) * productsPerPage;
+                const end = start + productsPerPage;
+                const productsToShow = allProducts.slice(start, end);
+                const productsGrid = document.querySelector('.products-grid');
+                productsGrid.innerHTML = '';
+
+                productsToShow.forEach(product => {
+                    const sizeChartHtml = Object.entries(product['size-chart'] || {})
+                        .map(([size, measurements]) => {
+                            if (!measurements) return '';
+                            return `
+                                <tr>
+                                    <td><strong>${size}</strong></td>
+                                    <td>Chest: ${measurements.chest || '-'}</td>
+                                    <td>Shoulder: ${measurements.shoulder || '-'}</td>
+                                    <td>Length: ${measurements.length || '-'}</td>
+                                    <td>Sleeve: ${measurements['sleeve-length'] || '-'}</td>
+                                </tr>
+                            `;
+                        }).join('');
+
+                    const card = `
+                        <div class="product-card">
+                            <img src="${product.imgUrl}" alt="${product.title}" class="product-image">
+                            <div class="product-info">
+                                <div class="product-id">Product ID: ${product.pid}</div>
+                                <h2 class="product-title">${product.title}</h2>
+                                <div class="price">${product.price}</div>
+                                <div class="rating">★ ${product.rating}</div>
+                                <div class="sizes">
+                                    ${product.sizesListed.map(size => `
+                                        <span class="size-tag" onclick="toggleSizeDetails(this)">${size}</span>
+                                    `).join('')}
+                                </div>
+                                <div class="size-details">
+                                    <table>
+                                        ${sizeChartHtml}
+                                    </table>
+                                </div>
+                            </div>
+                            <a href="${product.url}" target="_blank" class="view-btn">View on Flipkart</a>
+                        </div>
+                    `;
+                    productsGrid.innerHTML += card;
+                });
+
+                // Update pagination controls
+                document.getElementById('currentPage').textContent = currentPage;
+                document.getElementById('prevPage').disabled = currentPage === 1;
+                document.getElementById('nextPage').disabled = currentPage === Math.ceil(allProducts.length / productsPerPage);
+            }
+
+            function changePage(delta) {
+                currentPage += delta;
+                displayProducts(currentPage);
+                // Scroll to top of page
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            fetch('shirts.json')
+                .then(response => response.json())
+                .then(data => {
+                    allProducts = data;
+                    const totalPages = Math.ceil(data.length / productsPerPage);
+                    document.getElementById('product-count').textContent = data.length;
+                    document.getElementById('totalPages').textContent = totalPages;
+                    displayProducts(currentPage);
+                })
+                .catch(error => console.error('Error loading products:', error));
+
+            function toggleSizeDetails(element) {
+                const card = element.closest('.product-card');
+                const details = card.querySelector('.size-details');
+                details.classList.toggle('active');
+            }
+        </script>
+    </div>
+</body>
+</html>

@@ -28,7 +28,7 @@
             left: 50%;
             width: 0;
             height: 2px;
-            background-color: #1f2937;
+            background-color: #3B82F6;
             transition: all 0.3s ease;
             transform: translateX(-50%);
         }
@@ -73,32 +73,22 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body class="bg-gray-50">
-    <nav class="bg-white backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-gray-200">
+    <nav class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20">
+            <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-gray-900 hover:text-gray-700 transition-colors">TailoredMatch</a>
+                    <a href="/" class="text-2xl font-bold text-blue-600">TailoredMatch</a>
                 </div>
                 <div class="flex items-center space-x-8">
-                    <a href="/" class="nav-link text-gray-800 hover:text-gray-600 font-medium">Home</a>
-                    {% if request.session.user_measurements %}
-                        <a href="{% url 'products:shirt_list' %}" class="nav-link text-gray-800 hover:text-gray-600 font-medium">Best Fit</a>
-                    {% else %}
-                        <a href="/measurements/" class="nav-link text-gray-800 hover:text-gray-600 font-medium">Get Started</a>
-                    {% endif %}
-                    <a href="/products/all-products/" class="nav-link text-gray-800 hover:text-gray-600 font-medium">Products</a>
+                    <a href="/" class="nav-link text-gray-700 hover:text-blue-600">Home</a>
+                    <a href="/measurements/" class="nav-link text-gray-700 hover:text-blue-600">Get Started</a>
+                    <a href="/products/all-products/" class="nav-link text-gray-700 hover:text-blue-600">Products</a>
                     {% if user.is_authenticated %}
-                        <a href="/account/" class="nav-link text-gray-800 hover:text-gray-600 font-medium">My Account</a>
-                        <a href="/logout/" class="nav-link text-gray-800 hover:text-gray-600 font-medium">Logout</a>
+                        <a href="/account/" class="nav-link text-gray-700 hover:text-blue-600">My Account</a>
+                        <a href="/logout/" class="nav-link text-gray-700 hover:text-blue-600">Logout</a>
                     {% else %}
-                        <a href="/login/" class="nav-link text-gray-800 hover:text-gray-600 font-medium">Login</a>
-                        <a href="/signup/" 
-                           class="inline-block bg-gray-900 text-white px-6 py-2 font-medium
-                                  rounded-md hover:bg-gray-800 transition-all
-                                  hover:scale-105 hover:shadow-lg
-                                  relative overflow-hidden group">
-                            <span class="relative z-10">Sign Up</span>
-                        </a>
+                        <a href="/login/" class="nav-link text-gray-700 hover:text-blue-600">Login</a>
+                        <a href="/signup/" class="btn-primary bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">Sign Up</a>
                     {% endif %}
                 </div>
             </div>

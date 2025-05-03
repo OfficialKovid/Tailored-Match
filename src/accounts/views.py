@@ -38,9 +38,9 @@ def login_page(request):
             return redirect('/login/')
         else:
             login(request,user)
-            return redirect('/measurements/')
+            return redirect('/')
 
-    return render(request, "accounts/login.html")  # Updated template path
+    return render(request, "accounts/login.html") 
 
 @login_required(login_url='/login/')
 def account(request):

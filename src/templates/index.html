@@ -5,88 +5,278 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div class="fade-in">
-                <h1 class="text-4xl md:text-6xl font-bold mb-6">Find Your Perfect Fit</h1>
-                <p class="text-xl mb-8">Get personalized clothing recommendations based on your measurements from top e-commerce platforms.</p>
-                <a href="/measurement/" class="btn-primary bg-white text-blue-600 px-8 py-3 rounded-md text-lg font-semibold hover:bg-gray-100">
-                    Get Started
-                </a>
-            </div>
-            <div class="fade-in" style="animation-delay: 0.3s">
-                <img src="{% static 'img/hero-image.png' %}" alt="TailoredMatch" class="rounded-lg shadow-xl">
+<section class="hero">
+    <div class="hero__slider">
+        <div class="hero__items">
+            <div class="relative h-screen flex items-center">
+                <img src="{% static 'img/hero-bg.jpg' %}" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover -z-10">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-2xl bg-white/90 p-8 rounded-lg backdrop-blur-sm">
+                        <span class="text-lg uppercase tracking-wider mb-4 block fade-in text-gray-800">Perfect Fit Collection</span>
+                        <h1 class="text-5xl font-bold mb-6 fade-in text-gray-900">Find Your Perfect Fit</h1>
+                        <p class="text-xl mb-8 fade-in text-gray-700">Get personalized clothing recommendations based on your exact measurements.</p>
+                        <a href="/measurements/" 
+                           class="inline-block bg-gray-900 text-white px-8 py-3 font-semibold 
+                                  hover:bg-gray-800 transition-all fade-in relative 
+                                  overflow-hidden group hover:scale-105 hover:shadow-xl
+                                  after:absolute after:inset-0 after:bg-white/20 
+                                  after:opacity-0 after:transition-opacity
+                                  hover:after:opacity-100 transform duration-300">
+                            <span class="relative z-10 group-hover:translate-x-1 inline-block transition-transform">
+                                MEASURE NOW
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                     class="h-5 w-5 inline-block ml-2 group-hover:translate-x-1 transition-transform" 
+                                     fill="none" viewBox="0 0 24 24" 
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Banner Section -->
+<section class="py-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="relative overflow-hidden group rounded-lg shadow-lg transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl">
+                <img src="{% static 'img/formal.png' %}" alt="Formal Shirts" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-black bg-opacity-40 transition-all duration-500 group-hover:bg-opacity-30">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-4 transition-all duration-500">
+                        <div class="text-center text-white">
+                            <h2 class="text-3xl font-bold mb-4 transform transition-transform duration-500 group-hover:scale-110">Formal Shirts</h2>
+                            <a href="/products/formal/" 
+                               class="inline-block border-b-2 border-white hover:border-gray-300 py-2 px-4 transition-all duration-300 hover:bg-white hover:text-gray-900 rounded-full">
+                                Shop Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative overflow-hidden group rounded-lg shadow-lg transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl">
+                <img src="{% static 'img/casual.png' %}" alt="Casual Shirts" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-black bg-opacity-40 transition-all duration-500 group-hover:bg-opacity-30">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-4 transition-all duration-500">
+                        <div class="text-center text-white">
+                            <h2 class="text-3xl font-bold mb-4 transform transition-transform duration-500 group-hover:scale-110">Casual Shirts</h2>
+                            <a href="/products/casual/" 
+                               class="inline-block border-b-2 border-white hover:border-gray-300 py-2 px-4 transition-all duration-300 hover:bg-white hover:text-gray-900 rounded-full">
+                                Shop Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <!-- How It Works -->
-<section class="py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">How It Works</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div class="text-center fade-in" style="animation-delay: 0.4s">
-                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span class="text-2xl text-blue-600">1</span>
+<section class="py-20" style="background-color: #eeeeee;">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold">How It Works</h2>
+            <div class="w-24 h-1 bg-gray-900 mx-auto mt-4"></div>
+        </div>
+        
+        <div class="space-y-16">
+            <!-- Enter Measurements -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 h-[500px]">
+                    <div class="p-12 flex flex-col justify-center group-hover:scale-105 transition-transform duration-500">
+                        <div class="flex items-center gap-4 mb-6 group-hover:translate-x-2 transition-transform duration-500">
+                            <div class="bg-gray-900 w-12 h-12 rounded-full flex items-center justify-center text-white">
+                                <span class="text-xl">1</span>
+                            </div>
+                            <h3 class="text-2xl font-semibold">Enter Your Measurements</h3>
+                        </div>
+                        <p class="text-gray-600 text-lg leading-relaxed group-hover:translate-x-2 transition-transform duration-500">
+                            Provide your measurements for the most accurate recommendations. 
+                            Our smart system ensures precise fit calculations for the perfect match.
+                        </p>
+                    </div>
+                    <div class="relative overflow-hidden">
+                        <img src="{% static 'img/measurement.png' %}" 
+                             alt="Measurement" 
+                             class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2">
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-4">Enter Your Measurements</h3>
-                <p class="text-gray-600">Provide your measurements for the most accurate recommendations.</p>
             </div>
-            <div class="text-center fade-in" style="animation-delay: 0.6s">
-                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span class="text-2xl text-blue-600">2</span>
+
+            <!-- Browse Products -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 h-[500px]">
+                    <div class="relative overflow-hidden">
+                        <img src="{% static 'img/products.png' %}" 
+                             alt="Browse" 
+                             class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2">
+                    </div>
+                    <div class="p-12 flex flex-col justify-center group-hover:scale-105 transition-transform duration-500">
+                        <div class="flex items-center gap-4 mb-6 group-hover:translate-x-2 transition-transform duration-500">
+                            <div class="bg-gray-900 w-12 h-12 rounded-full flex items-center justify-center text-white">
+                                <span class="text-xl">2</span>
+                            </div>
+                            <h3 class="text-2xl font-semibold">Browse Products</h3>
+                        </div>
+                        <p class="text-gray-600 text-lg leading-relaxed group-hover:translate-x-2 transition-transform duration-500">
+                            View clothing items that match your measurements from popular e-commerce sites. 
+                            Every item is pre-filtered to match your size preferences.
+                        </p>
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-4">Browse Products</h3>
-                <p class="text-gray-600">View clothing items that match your measurements from popular e-commerce sites.</p>
             </div>
-            <div class="text-center fade-in" style="animation-delay: 0.8s">
-                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span class="text-2xl text-blue-600">3</span>
+
+            <!-- Shop with Confidence -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 h-[500px]">
+                    <div class="p-12 flex flex-col justify-center group-hover:scale-105 transition-transform duration-500">
+                        <div class="flex items-center gap-4 mb-6 group-hover:translate-x-2 transition-transform duration-500">
+                            <div class="bg-gray-900 w-12 h-12 rounded-full flex items-center justify-center text-white">
+                                <span class="text-xl">3</span>
+                            </div>
+                            <h3 class="text-2xl font-semibold">Shop with Confidence</h3>
+                        </div>
+                        <p class="text-gray-600 text-lg leading-relaxed group-hover:translate-x-2 transition-transform duration-500">
+                            Purchase clothes knowing they'll fit you perfectly. 
+                            No more returns due to sizing issues.
+                        </p>
+                    </div>
+                    <div class="relative overflow-hidden">
+                        <img src="{% static 'img/shopwcon.png' %}" 
+                             alt="Shop" 
+                             class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2">
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-4">Shop with Confidence</h3>
-                <p class="text-gray-600">Purchase clothes knowing they'll fit you perfectly.</p>
             </div>
         </div>
     </div>
-</section>
-
-<!-- Features -->
-<section class="bg-gray-100 py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">Why Choose TailoredMatch?</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div class="bg-white p-8 rounded-lg shadow-md fade-in" style="animation-delay: 0.5s">
-                <h3 class="text-xl font-semibold mb-4">Smart Recommendations</h3>
-                <p class="text-gray-600">Our algorithm analyzes thousands of products to find the perfect fit for you.</p>
-            </div>
-            <div class="bg-white p-8 rounded-lg shadow-md fade-in" style="animation-delay: 0.6s">
-                <h3 class="text-xl font-semibold mb-4">Multiple Retailers</h3>
-                <p class="text-gray-600">Access products from various e-commerce platforms in one place.</p>
-            </div>
-            <div class="bg-white p-8 rounded-lg shadow-md fade-in" style="animation-delay: 0.7s">
-                <h3 class="text-xl font-semibold mb-4">Save Time</h3>
-                <p class="text-gray-600">No more returns due to poor fit. Get it right the first time.</p>
-            </div>
-            <div class="bg-white p-8 rounded-lg shadow-md fade-in" style="animation-delay: 0.8s">
-                <h3 class="text-xl font-semibold mb-4">Easy to Use</h3>
-                <p class="text-gray-600">Simple interface and clear instructions for the best shopping experience.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA Section -->
-<section class="py-20">
-    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl md:text-4xl font-bold mb-8 fade-in">Ready to Find Your Perfect Fit?</h2>
-        <p class="text-xl text-gray-600 mb-12 fade-in" style="animation-delay: 0.3s">Join thousands of satisfied customers who found their perfect clothing fit.</p>
-        <a href="/measurement/" class="btn-primary bg-blue-600 text-white px-8 py-3 rounded-md text-lg font-semibold inline-block hover:bg-blue-700 fade-in" style="animation-delay: 0.5s">
-            Get Started Now
+    <!-- Add Get Started CTA -->
+    <div class="text-center mt-16">
+        <a href="/measurements/" 
+           class="inline-block bg-gray-900 text-white px-12 py-4 rounded-md text-lg font-semibold
+                  hover:bg-gray-800 transition-all relative overflow-hidden group
+                  hover:scale-105 hover:shadow-xl transform duration-300">
+            <span class="relative z-10 group-hover:translate-x-1 inline-flex items-center transition-transform">
+                Get Started Now
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                     class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" 
+                     fill="none" viewBox="0 0 24 24" 
+                     stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </span>
         </a>
     </div>
 </section>
+
+<!-- Testimonials Section -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold">What Our Customers Say</h2>
+            <div class="w-24 h-1 bg-gray-900 mx-auto mt-4"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-gray-50 p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                <div class="flex flex-col items-center">
+                    <img src="{% static 'img/testimonial1.jpg' %}" alt="Customer" class="w-20 h-20 rounded-full object-cover mb-4">
+                    <div class="flex text-yellow-400 mb-4">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    </div>
+                    <p class="text-gray-600 text-center mb-4 italic">"Finally found shirts that fit perfectly! No more awkward fits or returns. TailoredMatch has revolutionized my shopping experience."</p>
+                    <h4 class="font-semibold">John Smith</h4>
+                    <p class="text-gray-500 text-sm">Marketing Executive</p>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="bg-gray-50 p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                <div class="flex flex-col items-center">
+                    <img src="{% static 'img/testimonial2.jpg' %}" alt="Customer" class="w-20 h-20 rounded-full object-cover mb-4">
+                    <div class="flex text-yellow-400 mb-4">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    </div>
+                    <p class="text-gray-600 text-center mb-4 italic">"The measurement system is so precise! I've never had shirts fit this well before. Absolutely love the personalized recommendations."</p>
+                    <h4 class="font-semibold">Sarah Johnson</h4>
+                    <p class="text-gray-500 text-sm">Business Analyst</p>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="bg-gray-50 p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                <div class="flex flex-col items-center">
+                    <img src="{% static 'img/testimonial3.jpg' %}" alt="Customer" class="w-20 h-20 rounded-full object-cover mb-4">
+                    <div class="flex text-yellow-400 mb-4">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    </div>
+                    <p class="text-gray-600 text-center mb-4 italic">"Time and money saved! No more buying multiple sizes or endless returns. TailoredMatch's recommendations are spot on."</p>
+                    <h4 class="font-semibold">Michael Chen</h4>
+                    <p class="text-gray-500 text-sm">Software Engineer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero {
+        position: relative;
+        height: 100vh;
+    }
+    
+    .hero__items {
+        position: relative;
+        height: 100%;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .fade-in {
+        animation: fadeInUp 1s ease-out forwards;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .animate-pulse-slow {
+        animation: pulse 2s infinite;
+    }
+</style>
 {% endblock %}
 
 {% block extra_js %}

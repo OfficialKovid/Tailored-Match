@@ -1,6 +1,6 @@
 from django.views.generic import FormView
 from django.db.models import Q
-from products.models import Shirt
+from apps.products.models import Shirt
 from .forms import PreferenceSearchForm
 
 class PreferenceSearchView(FormView):

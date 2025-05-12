@@ -22,7 +22,8 @@ def load_shirts():
     Shirt.objects.all().delete()
 
     # Load JSON data
-    with open('shirts.json', 'r', encoding='utf-8') as file:
+    json_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "data", "shirts.json")
+    with open(json_path, 'r', encoding='utf-8') as file:
         shirts_data = json.load(file)
 
     # Process each shirt

@@ -6,7 +6,7 @@ from scrapy_splash import SplashRequest
 class FlipscrapefullSpider(scrapy.Spider):
     name = "flipscrapefull"
     allowed_domains = ["flipkart.com"]
-    start_urls = ["https://www.flipkart.com/search?q=tshirt"]
+    start_urls = ["https://www.flipkart.com/search?q=shirt"]
 
     def parse(self, response):
         shirts = response.css("div._1sdMkc")
@@ -19,7 +19,7 @@ class FlipscrapefullSpider(scrapy.Spider):
         # Handle pagination
         page = response.meta.get('page', 1)
         if page <= 25:
-            nextPageUrl = f"https://www.flipkart.com/search?q=tshirt&page={page+1}"
+            nextPageUrl = f"https://www.flipkart.com/search?q=shirt&page={page+1}"
             yield response.follow(nextPageUrl, callback=self.parse, meta={'page': page + 1})
 
     def shirtparse(self, response):
